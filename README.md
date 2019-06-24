@@ -7,7 +7,7 @@ Check the Quality Gate of your code with [CodeScanCloud](https://app.codescan.io
 Add the following snippet to the script section of your `bitbucket-pipelines.yml` file:
 
 ```yaml
-- pipe: sonarsource/codescancloud-quality-gate:0.1.0
+- pipe: codescan/codescancloud-quality-gate:0.1.0
   # variables:
   #   SONAR_QUALITY_GATE_TIMEOUT: '<int>'  # Optional
 ```
@@ -39,13 +39,13 @@ To use this pipe you must have the [CodeScanCloud Scan pipe][codescancloud-scan-
 Basic example:
 
 ```yaml
-- pipe: sonarsource/codescancloud-quality-gate:0.1.0
+- pipe: codescan/codescancloud-quality-gate:0.1.0
 ```
 
 A bit more advanced example:
 
 ```yaml
-- pipe: sonarsource/codescancloud-quality-gate:0.1.0
+- pipe: codescan/codescancloud-quality-gate:0.1.0
   variables:
     SONAR_QUALITY_GATE_TIMEOUT: 180  # 3 minutes
 ```
@@ -60,5 +60,5 @@ If you are reporting an issue, please include:
 * relevant logs and error messages
 * steps to reproduce
 
-[codescancloud-scan-pipe]: https://bitbucket.org/sonarsource/codescancloud-scan/src/master/README.md
+[codescancloud-scan-pipe]: https://github.com/VillageChief/codescancloud-scan/src/master/README.md
 

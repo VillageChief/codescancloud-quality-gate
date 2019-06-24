@@ -82,11 +82,11 @@ Example pipeline definition for a JavaScript project:
             script:
               - npm install
               - npm test
-              - pipe: sonarsource/codescancloud-scan:1.0.0
+              - pipe: codescan/codescancloud-scan:1.0.0
         - step:
             name: Check Quality Gate on CodeScanCloud
             script:
-              - pipe: sonarsource/codescancloud-quality-gate:name-of-feature-branch
+              - pipe: codescan/codescancloud-quality-gate:name-of-feature-branch
         - step:
             name: Deploy to Production
             deployment: "Production"
