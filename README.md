@@ -52,7 +52,7 @@ A bit more advanced example:
 
 ## Support
 
-If you would like help with this pipe, or you have an issue or feature request, [let us know on our community forum][community-forum].
+If you would like help with this pipe, or you have an issue or feature request, [let us know on our support email][mailto:support@code-scan.com].
 
 If you are reporting an issue, please include:
 
