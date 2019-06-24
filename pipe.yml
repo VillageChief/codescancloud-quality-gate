@@ -4,7 +4,7 @@ image: sonarsource/codescancloud-quality-gate:0.1.0
 variables:
   - name: SONAR_TOKEN
     default: '${SONAR_TOKEN}'
-repository: https://bitbucket.org/sonarsource/codescancloud-quality-gate
+repository: https://github.com/VillageChief/codescancloud-quality-gate
 maintainer: contact@sonarsource.com
 icon: https://app.codescan.io/images/sonarcloud-square-logo.svg
 tags:

@@ -53,7 +53,7 @@ Preparing a branch for validation by PM
 Create a QA build of the pipe's Docker image:
 run the `build-docker-qa` pipeline manually for the feature branch.
 
-This will trigger the deployment of a Docker image on https://hub.docker.com/r/villagechief/codescancloud-quality-gate/tags,
+This will trigger the deployment of a Docker image on https://hub.docker.com/r/codescan/codescancloud-quality-gate/tags
 tagged `${VERSION}.${BITBUCKET_BUILD_NUMBER}-QA`.
 
 Edit the `pipe.yml` in a "DO NOT MERGE" commit,
