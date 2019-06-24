@@ -40,17 +40,17 @@ def get_scanner_report_text(scanner_report_path):
 
 def extract_ce_task_url(scanner_report_text):
     """
-    >>> extract_ce_task_url("foo\\nINFO: More about the report processing at https://sonarcloud.io/api/ce/task?id=AWsm6vSHvzfVeZRohhkI\\nbar")
-    'https://sonarcloud.io/api/ce/task?id=AWsm6vSHvzfVeZRohhkI'
+    >>> extract_ce_task_url("foo\\nINFO: More about the report processing at https://app.codescan.io/api/ce/task?id=AWsm6vSHvzfVeZRohhkI\\nbar")
+    'https://app.codescan.io/api/ce/task?id=AWsm6vSHvzfVeZRohhkI'
 
     >>> extract_ce_task_url("foo")
     Traceback (most recent call last):
       ...
     pipe.QualityCheckError: Could not find compute engine task URL in scanner report
 
-    >>> s = 'INFO: More about the report processing at https://sonarcloud.io/api/ce/task?id=AWsm6vSHvzfVeZRohhkI'
+    >>> s = 'INFO: More about the report processing at https://app.codescan.io/api/ce/task?id=AWsm6vSHvzfVeZRohhkI'
     >>> extract_ce_task_url("foo\\n{}\\n{}\\nbar".format(s, s))
-    'https://sonarcloud.io/api/ce/task?id=AWsm6vSHvzfVeZRohhkI'
+    'https://app.codescan.io/api/ce/task?id=AWsm6vSHvzfVeZRohhkI'
 
     """
     match = re.search(r'More about the report processing at (.*)', scanner_report_text)
@@ -62,14 +62,14 @@ def extract_ce_task_url(scanner_report_text):
 
 def extract_project_url(scanner_report_text):
     """
-    >>> line_with_project_url = 'INFO: ANALYSIS SUCCESSFUL, you can browse https://sonarcloud.io/dashboard?id=janos-ss-team_upvotejs&branch=feature%2Ffailing-qg&resolved=false'
+    >>> line_with_project_url = 'INFO: ANALYSIS SUCCESSFUL, you can browse https://app.codescan.io/dashboard?id=janos-ss-team_upvotejs&branch=feature%2Ffailing-qg&resolved=false'
     >>> extract_project_url("foo\\n{}\\nbar".format(line_with_project_url))
-    'https://sonarcloud.io/dashboard?id=janos-ss-team_upvotejs&branch=feature%2Ffailing-qg&resolved=false'
+    'https://app.codescan.io/dashboard?id=janos-ss-team_upvotejs&branch=feature%2Ffailing-qg&resolved=false'
 
     >>> extract_project_url("foo")
 
     >>> extract_project_url("foo\\n{}\\n{}\\nbar".format(line_with_project_url, line_with_project_url))
-    'https://sonarcloud.io/dashboard?id=janos-ss-team_upvotejs&branch=feature%2Ffailing-qg&resolved=false'
+    'https://app.codescan.io/dashboard?id=janos-ss-team_upvotejs&branch=feature%2Ffailing-qg&resolved=false'
 
     """
     match = re.search(r'ANALYSIS SUCCESSFUL, you can browse (.*)', scanner_report_text)
@@ -197,7 +197,7 @@ class MetricsRepository:
         return self.metrics[metric_key]
 
 
-class SonarCloudClient:
+class CodeScanCloudClient:
     def __init__(self, sonar_token):
         self.sonar_token = sonar_token
 
@@ -221,7 +221,7 @@ class SonarCloudClient:
         return QualityGateStatus(self._get_response_as_dict(url, "Could not fetch quality gate status"))
 
     def get_metrics(self, metric_keys):
-        url = 'https://sonarcloud.io/api/metrics/search?ps=500'
+        url = 'https://app.codescan.io/api/metrics/search?ps=500'
         try:
             return MetricsRepository(self._get_response_as_dict(url, "ignored"), metric_keys)
         except QualityGateStatus:
@@ -265,14 +265,14 @@ def wait_for_completed_ce_task(ce_task_getter, max_retry_count, poll_interval_se
 
 
 def get_quality_gate_status_url(ce_task):
-    return "https://sonarcloud.io/api/qualitygates/project_status?analysisId={}".format(ce_task.analysis_id)
+    return "https://app.codescan.io/api/qualitygates/project_status?analysisId={}".format(ce_task.analysis_id)
 
 
 def main(pipe):
     sonar_token = get_variable('SONAR_TOKEN', required=True)
     timeout_seconds = get_variable('SONAR_QUALITY_GATE_TIMEOUT', required=False, default=DEFAULT_TIMEOUT_SECONDS)
 
-    client = SonarCloudClient(sonar_token)
+    client = CodeScanCloudClient(sonar_token)
 
     scanner_report_path = get_scanner_report_path()
     scanner_report_text = get_scanner_report_text(scanner_report_path)
@@ -286,7 +286,7 @@ def main(pipe):
 
     project_url = extract_project_url(scanner_report_text)
     if project_url:
-        project_url_suffix = "\nSee more details on SonarCloud: {}".format(project_url)
+        project_url_suffix = "\nSee more details on CodeScanCloud: {}".format(project_url)
     else:
         project_url_suffix = ''
 
