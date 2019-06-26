@@ -20,8 +20,7 @@ class QualityCheckError(BaseException):
 
 
 def get_scanner_report_path():
-    return "{}/sonarsource/sonarcloud-scan/sonarcloud-scan.log".format(os.environ['BITBUCKET_PIPE_SHARED_STORAGE_DIR'])
-
+    return "{}/codescan/codescancloud-scan/codescancloud-scan.log".format(os.environ['BITBUCKET_PIPE_SHARED_STORAGE_DIR'])
 
 def get_scanner_report_text(scanner_report_path):
     """

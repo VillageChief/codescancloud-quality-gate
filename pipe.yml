@@ -1,6 +1,6 @@
 name: CodeScanCloud Quality Gate check
 description: Check if a project / analysis passed the quality gate check
-image: codescan/codescancloud-quality-gate:0.1.0
+image: codescan/codescancloud-quality-gate:1.0.0
 variables:
   - name: SONAR_TOKEN
     default: '${SONAR_TOKEN}'
