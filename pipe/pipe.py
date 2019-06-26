@@ -165,7 +165,10 @@ class CeTask:
         try:
             self.status = obj['task']['status']
             self.completed = self.status not in ('IN_PROGRESS', 'PENDING')
-            self.analysis_id = obj['task']['analysisId']
+            if 'analysisId' in obj['task']:
+                self.analysis_id = obj['task']['analysisId']
+            else:
+                self.analysis_id = obj['task']['id']
         except:
             raise QualityCheckError("Could not parse compute engine task from json: {}".format(json.dumps(obj)))
 
